@@ -15,12 +15,15 @@ import java.util.Date;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "Comment",sequenceName = "comment_id_seq")
+    @GeneratedValue(generator = "Comment")
     private Integer id;
-    @Column(length = 500)
+    @Column(length = 500,nullable = false)
     private String commentText;
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
     private Date commentDate;
+    @Column(nullable = false)
     private Long productId;
 
     @ManyToOne(targetEntity = User.class)

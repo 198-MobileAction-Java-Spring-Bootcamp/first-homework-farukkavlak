@@ -1,5 +1,9 @@
 package com.farukkavlak.hw1.Services;
 
+import com.farukkavlak.hw1.Converter.CommentConverter;
+import com.farukkavlak.hw1.Dto.CommentDto;
+import com.farukkavlak.hw1.Dto.CommentSaveRequestDto;
+import com.farukkavlak.hw1.Dto.UserDto;
 import com.farukkavlak.hw1.Models.Comment;
 import com.farukkavlak.hw1.Models.User;
 import com.farukkavlak.hw1.Repositories.CommentRepository;
@@ -16,27 +20,37 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    CommentConverter commentConverter = new CommentConverter();
+
     @Override
-    public Comment saveComment(Comment comment, int commentedUser_id) {
-        User commentedUser = userRepository.findById(commentedUser_id).orElse(null);
+    public CommentDto saveComment(CommentSaveRequestDto commentSaveRequestDto, int commentedUser_id) {
+        User commentedUser = userRepository.findById(commentedUser_id).orElseThrow();
+        Comment comment = commentConverter.convertToComment(commentSaveRequestDto);
         comment.setUser(commentedUser);
         commentRepository.save(comment);
-        return comment;
+        CommentDto commentDto = commentConverter.convertToCommentDto(comment);
+        return commentDto;
     }
 
     @Override
-    public List<Comment> findAll() {
-        return commentRepository.findAll();
+    public List<CommentDto> findAll() {
+        List<Comment> commentList = commentRepository.findAll();
+        List<CommentDto> commentDtoList = commentConverter.convertToCommentDtoList(commentList);
+        return commentDtoList;
     }
 
     @Override
-    public void deleteCommentById(int deletedComment_id) {
+    public void deleteById(int deletedComment_id) {
+        boolean isExist = commentRepository.existsById(deletedComment_id);
+        if(!isExist){
+            throw new RuntimeException("User does not exist with given id.");
+        }
         commentRepository.deleteById(deletedComment_id);
     }
 
     @Override
-    public Comment updateCommentById(String commentText, int updatedComment_id) {
-        Comment updatedComment = commentRepository.findById(updatedComment_id).orElse(null);
+    public Comment updateById(String commentText, int updatedComment_id) {
+        Comment updatedComment = commentRepository.findById(updatedComment_id).orElseThrow();
         updatedComment.setCommentText(commentText);
         commentRepository.save(updatedComment);
         return updatedComment;

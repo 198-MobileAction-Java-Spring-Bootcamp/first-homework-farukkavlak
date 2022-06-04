@@ -1,12 +1,18 @@
 package com.farukkavlak.hw1.Controllers;
 
+import com.farukkavlak.hw1.Dto.UserDto;
+import com.farukkavlak.hw1.Dto.UserSaveRequestDto;
+import com.farukkavlak.hw1.Dto.UserUpdateRequestDto;
 import com.farukkavlak.hw1.Models.User;
 import com.farukkavlak.hw1.Services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -16,30 +22,32 @@ public class UserController {
     }
 
     @PostMapping("saveUser")
-    public String saveUser(@RequestBody User user){
-        userService.saveUser(user);
-        return user.getName()+" "+ user.getSurname()+" saved";
+    public ResponseEntity saveUser(@RequestBody UserSaveRequestDto userSaveRequestDto){
+        userService.saveUser(userSaveRequestDto);
+        return new ResponseEntity(userSaveRequestDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("findAllUsers")
-    public List<User> findAll(){
-        return userService.findAll();
+    @GetMapping("findAll")
+    public ResponseEntity findAll(){
+        List<UserDto> userList = userService.findAll();
+        return ResponseEntity.ok(userList);
     }
 
-    @GetMapping("findUserById/{user_id}")
-    public User findUserById(@PathVariable("user_id") int user_id){
-        return userService.findUserById(user_id);
+    @GetMapping("findById/{user_id}")
+    public ResponseEntity findUserById(@PathVariable("user_id") int user_id){
+        UserDto userWithThisId = userService.findById(user_id);
+        return ResponseEntity.ok(userWithThisId);
     }
 
-    @PutMapping("updateUserById/{updatedUser_id}")
-    public String updateUserById(@RequestBody User newUser,@PathVariable int updatedUser_id){
-        User replacedUser = userService.updateUserById(newUser,updatedUser_id);
-        return "User updated(id="+replacedUser.getId()+")";
+    @PutMapping("updateById/{updatedUser_id}")
+    public ResponseEntity updateById(@RequestBody UserUpdateRequestDto userUpdateRequestDto, @PathVariable int updatedUser_id){
+        UserDto replacedUser = userService.updateById(userUpdateRequestDto,updatedUser_id);
+        return ResponseEntity.ok(replacedUser);
     }
 
-    @PutMapping("setInactive/{user_id}")
-    public String setInactive(@PathVariable("user_id") int user_id){
-        User selectedUser = userService.setInactive(user_id);
-        return "User is deactivated(id="+selectedUser.getId()+")";
+    @PatchMapping("setInactive/{user_id}")
+    public ResponseEntity setInactive(@PathVariable("user_id") int user_id){
+        UserDto selectedUser = userService.setInactive(user_id);
+        return ResponseEntity.ok(selectedUser);
     }
 }

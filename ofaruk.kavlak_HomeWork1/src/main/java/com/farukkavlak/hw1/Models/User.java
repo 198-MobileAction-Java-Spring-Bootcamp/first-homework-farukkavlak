@@ -14,18 +14,21 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "User",sequenceName = "user_id_seq")
+    @GeneratedValue(generator = "User")
     private Integer id;
-    @Column(length = 50)
+    @Column(length = 50,nullable = false)
     private String name;
-    @Column(length = 50)
+    @Column(length = 50,nullable = false)
     private String surname;
-    @Column(length = 50)
+    @Column(length = 50,nullable = false)
     private String email;
-    @Column(length = 15)
+    @Column(length = 15,nullable = false)
     private String phoneNumber;
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(nullable = false)
     private Date birthDate;
+    @Column(nullable = false)
     private boolean isActive;
 
 }
