@@ -7,6 +7,7 @@ import com.farukkavlak.hw1.Models.User;
 
 import java.util.List;
 
+//Interface to do some operations on the User Entity
 public interface UserService {
     UserDto saveUser(UserSaveRequestDto userSaveRequestDto);
     List<UserDto> findAll();

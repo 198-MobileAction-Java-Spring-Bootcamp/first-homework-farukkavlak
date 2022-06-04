@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import java.util.Date;
+
+//Dto for comment to show user info about User Entity
 @Data
 public class UserDto {
     private String name;

@@ -6,6 +6,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+
+//Dto for comment to show user info about Comment Entity
 @Data
 public class CommentDto {
     private Integer id;

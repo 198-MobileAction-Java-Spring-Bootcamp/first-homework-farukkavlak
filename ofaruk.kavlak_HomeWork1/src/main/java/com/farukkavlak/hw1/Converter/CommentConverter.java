@@ -6,9 +6,10 @@ import com.farukkavlak.hw1.Models.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//To make some conversions about comment
 public class CommentConverter {
 
+    //CommentSaveRequestDto -> Comment Entity
     public Comment convertToComment(CommentSaveRequestDto commentSaveRequestDto){
         Comment comment = new Comment();
         comment.setCommentDate(commentSaveRequestDto.getCommentDate());
@@ -17,6 +18,7 @@ public class CommentConverter {
         return comment;
     }
 
+    //Comment Entity -> CommentDto
     public CommentDto convertToCommentDto(Comment comment){
         CommentDto commentDto = new CommentDto();
         commentDto.setCommentDate(comment.getCommentDate());
@@ -27,6 +29,7 @@ public class CommentConverter {
         return commentDto;
     }
 
+    //CommentList -> CommentDtoList
     public List<CommentDto> convertToCommentDtoList(List<Comment> commentList){
         List<CommentDto> commentDtoList = new ArrayList<>();
         for (Comment comment : commentList) {

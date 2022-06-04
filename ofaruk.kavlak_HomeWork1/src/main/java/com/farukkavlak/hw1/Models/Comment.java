@@ -12,6 +12,8 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
+//Comment Entity
 public class Comment {
 
     @Id

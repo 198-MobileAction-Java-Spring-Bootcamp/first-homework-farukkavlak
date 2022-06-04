@@ -22,6 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
     CommentConverter commentConverter = new CommentConverter();
 
+    //Save with given Dto
     @Override
     public CommentDto saveComment(CommentSaveRequestDto commentSaveRequestDto, int commentedUser_id) {
         User commentedUser = userRepository.findById(commentedUser_id).orElseThrow();
@@ -39,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
         return commentDtoList;
     }
 
+    //Delete from repo
     @Override
     public void deleteById(int deletedComment_id) {
         boolean isExist = commentRepository.existsById(deletedComment_id);
@@ -48,6 +50,7 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(deletedComment_id);
     }
 
+    //Update with given text and save again to the Comment repo
     @Override
     public Comment updateById(String commentText, int updatedComment_id) {
         Comment updatedComment = commentRepository.findById(updatedComment_id).orElseThrow();

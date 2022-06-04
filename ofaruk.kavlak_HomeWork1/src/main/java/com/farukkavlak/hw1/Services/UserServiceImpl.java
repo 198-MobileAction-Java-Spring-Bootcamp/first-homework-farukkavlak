@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     UserConverter userConverter = new UserConverter();
 
+    //Save with given Dto
     @Override
     public UserDto saveUser(UserSaveRequestDto userSaveRequestDto) {
         User user = userConverter.convertToUser(userSaveRequestDto);
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
+    //Update with given info and save again to the User repo
     @Override
     public UserDto updateById(UserUpdateRequestDto userUpdateRequestDto, int updatedUser_id) {
         UserDto userDto = userConverter.convertToUserDto(userRepository.findById(updatedUser_id).map(

@@ -6,8 +6,10 @@ import com.farukkavlak.hw1.Models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//To make some conversions about user
 public class UserConverter {
+
+    //UserSaveRequestDto -> User
     public User convertToUser(UserSaveRequestDto userSaveRequestDto){
         User user = new User();
         user.setName(userSaveRequestDto.getName());
@@ -18,7 +20,7 @@ public class UserConverter {
         user.setActive(userSaveRequestDto.isActive());
         return user;
     }
-
+    //UserDto -> User
     public User convertToUser(UserDto userDto){
         User user = new User();
         user.setName(userDto.getName());
@@ -29,6 +31,7 @@ public class UserConverter {
         user.setActive(userDto.isActive());
         return user;
     }
+    //User -> UserDto
     public UserDto convertToUserDto(User user){
         UserDto userDto = new UserDto();
         userDto.setName(user.getName());
